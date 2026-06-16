@@ -439,3 +439,52 @@ body { font-family: 'CenturyGothic', sans-serif; color: #ffffff; background-colo
   /* Reveal animation */
   animation: storyReveal 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
+
+
+/* =========================================
+   MOBILE RESPONSIVENESS (Screens < 768px)
+========================================= */
+@media only screen and (max-width: 768px) {
+    
+    /* 1. Reduce Title Size */
+    .title { 
+        font-size: 3.5rem !important; 
+    }
+
+    /* 2. Re-stack Bottom Area */
+    .bottom-text {
+        position: relative;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        margin-top: 50px;
+    }
+
+    /* 3. Reset absolute positioning for mobile elements */
+    .copyright, .email {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* 4. Fix CTA for mobile */
+    .cta {
+        transform: translateY(0) !important;
+        margin: 10px 0;
+    }
+
+    /* 5. Adjust Logo/Branding for mobile space */
+    .logo-icon {
+        position: relative;
+        left: auto;
+        top: auto;
+        margin-bottom: 20px;
+    }
+    
+    .layer-3-branding {
+        top: 30px;
+    }
+}
