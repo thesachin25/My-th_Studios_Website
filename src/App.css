@@ -2,11 +2,9 @@
    CUSTOM TEXT SELECTION
 ========================================= */
 ::selection {
-  background: rgba(255, 255, 255, 0.3); /* Semi-transparent white highlight */
-  color: #ffffff; /* Keeps the text white when selected */
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
 }
-
-/* For Firefox support */
 ::-moz-selection {
   background: rgba(255, 255, 255, 0.3);
   color: #ffffff;
@@ -21,14 +19,12 @@
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'CenturyGothic';
   src: url('./assets/GOTHIC.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
-
 @font-face {
   font-family: 'Perandory';
   src: url('./assets/PERANDORY-REGULAR.OTF') format('opentype');
@@ -37,127 +33,179 @@
 }
 
 /* =========================================
- BASE STYLES
+   BASE RESET
 ========================================= */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body, #root {
+html {
+  font-size: 16px; /* Base for rem units */
+}
+
+html,
+body,
+#root {
   width: 100%;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  max-width: none; 
-  overflow: hidden; 
+  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body {
   font-family: 'CenturyGothic', sans-serif;
   color: #ffffff;
-  background-color: #000000; 
+  background-color: #000000;
 }
 
 /* =========================================
- LAYER 1: The Background Image
+   FADE IN — ROOT
 ========================================= */
-.layer-1-background {
-  background-size: cover;
-  background-position: center -40px; 
-  background-repeat: no-repeat;
-  height: 100vh; 
-  width: 100%; 
-  position: relative; 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+#root {
+  animation: fadeIn 0.6s ease-in;
 }
 
 /* =========================================
- LAYER 3: Top Branding
+   LAYER 1 — BACKGROUND IMAGE
+========================================= */
+@keyframes drift {
+  0%   { background-position: center top; }
+  50%  { background-position: center 20px; }
+  100% { background-position: center top; }
+}
+
+.layer-1-background {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;           /* fallback */
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  animation: drift 10s ease-in-out infinite;
+  overflow: hidden;
+}
+
+/* =========================================
+   LAYER 3 — TOP BRANDING
 ========================================= */
 .layer-3-branding {
   position: absolute;
-  top: 70px; 
+  top: 0;
   left: 0;
   width: 100%;
+  padding: 28px 40px;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  z-index: 3; 
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
 }
 
 .logo-icon {
   position: absolute;
-  left: 40px; 
-  top: -30px; 
+  left: 40px;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0px 6px 8px rgba(0, 0, 0, 0.2));
+  }
 }
 
 .logo-icon img {
-  width: 60px; 
-  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4));
+  width: clamp(40px, 5vw, 60px);
+  display: block;
+  animation: breathe 4s ease-in-out infinite;
 }
 
 .studio-name {
-  font-size: 34px; 
+  font-size: clamp(20px, 2.5vw, 34px);
   letter-spacing: 2px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .font-myth {
   font-family: 'ReemKufi', sans-serif;
-  font-weight: bold; 
+  font-weight: bold;
 }
-
 .font-studios {
   font-family: 'CenturyGothic', sans-serif;
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 /* =========================================
- LAYER 2: Central Text
+   LAYER 2 — CENTRAL TEXT
 ========================================= */
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
 .layer-2-text {
-  height: 100vh; 
+  position: relative;
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 2; 
-  position: relative;
+  z-index: 2;
 }
 
 .center-text {
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px; 
-  margin-top: 5vh; 
+  gap: clamp(20px, 4vh, 40px);
+  margin-top: clamp(40px, 6vh, 80px); /* offset for header */
+  padding: 0 20px;
+  animation: floatUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* =========================================
+   TITLE GROUP
+========================================= */
 .title-group {
   display: flex;
   flex-direction: column;
-  align-items: stretch; 
-  width: max-content; 
+  align-items: stretch;
+  width: max-content;
+  max-width: 90vw;
 }
 
 .title {
-  font-family: 'Perandory', serif; 
-  font-size: 6.5rem; 
+  font-family: 'Perandory', serif;
+  font-size: clamp(3rem, 11vw, 6.5rem);
   font-weight: normal;
-  letter-spacing: 0px; 
+  letter-spacing: 0px;
   line-height: 0.9;
   text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
 }
 
 .date-row {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   width: 100%;
-  margin-top: 5px; 
-  font-size: 13px; 
-  letter-spacing: 2.5px;
+  margin-top: 6px;
+  font-size: clamp(9px, 1.5vw, 13px);
+  letter-spacing: clamp(1px, 0.4vw, 2.5px);
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -166,45 +214,107 @@ body {
   font-weight: bold;
 }
 
+/* =========================================
+   SUBTITLE / TAGLINE
+========================================= */
+@keyframes storyReveal {
+  0% {
+    opacity: 0;
+    letter-spacing: 20px;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 6px;
+    filter: blur(0px);
+  }
+}
+
 .subtitle {
-  margin-top: 15px;
-  font-size: 14px; 
-  letter-spacing: 7px; 
-  font-weight: bold;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  padding: 4px 8px;
+  margin-top: 10px;
+  line-height: 1;
+  background-color: rgba(160, 175, 210, 0.25);
+  font-size: clamp(10px, 1.8vw, 14px);
+  letter-spacing: 6px;
+  font-weight: normal;
+  color: #ffffff;
+  white-space: nowrap;
+  animation: storyReveal 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 /* =========================================
- BOTTOM AREA
+   BOTTOM AREA
 ========================================= */
 .bottom-text {
   position: absolute;
-  bottom: 40px;
+  bottom: clamp(20px, 4vh, 40px);
+  left: 0;
   width: 100%;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
-  padding: 0 60px;
+  padding: 0 clamp(20px, 5vw, 60px);
+  z-index: 4;
+  gap: 12px;
 }
 
-/* Glass Email Button (Right) */
-.email {
-  position: absolute;
-  right: 60px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 28px;
-  background: rgba(255, 255, 255, 0.06); 
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px; 
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  font-weight: bold; 
+/* CENTER: CTA */
+.cta {
   text-decoration: none;
   color: white;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
+  border-bottom: 2px solid #ffffff;
+  padding-bottom: 6px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: clamp(10px, 1.2vw, 12px);
+  font-weight: bold;
+  letter-spacing: 3px;
+  white-space: nowrap;
+  text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease, opacity 0.3s ease, letter-spacing 0.3s ease;
+  will-change: transform;
+}
+
+.cta:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  letter-spacing: 5px;
+}
+
+/* LEFT: Copyright */
+.copyright {
+  position: absolute;
+  left: clamp(20px, 5vw, 60px);
+  font-size: clamp(9px, 1.1vw, 12px);
+  letter-spacing: 1px;
+  font-weight: normal;
+  color: #ffffff;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+/* RIGHT: Email Pill */
+.email {
+  position: absolute;
+  right: clamp(20px, 5vw, 60px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: clamp(5px, 1vh, 10px) clamp(12px, 2vw, 22px);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  font-size: clamp(9px, 1.1vw, 12px);
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  letter-spacing: clamp(1px, 0.3vw, 2px);
+  white-space: nowrap;
+  transition: background 0.3s ease, transform 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -214,265 +324,280 @@ body {
 }
 
 .icon {
-  font-size: 14px;
-}
-
-/* CTA (Center - Nudged Up) */
-.cta {
-  text-decoration: none;
-  color: white;
-  border-bottom: 2px solid #ffffff;
-  padding-bottom: 6px; 
-  padding-left: 20px; 
-  padding-right: 20px; 
-  font-size: 12px;
-  font-weight: bold; 
-  transition: opacity 0.3s ease;
-  text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.6);
-  transform: translateY(-50px); /* NUDGED UP BY 50PX */
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Apply this to your main container */
-#root {
-  animation: fadeIn 0.6s ease-in;
-}
-
-.cta {
-  text-decoration: none;
-  color: white;
-  border-bottom: 2px solid #ffffff;
-  padding-bottom: 6px; 
-  padding-left: 20px; 
-  padding-right: 20px; 
-  font-size: 12px;
-  font-weight: bold; 
-  
-  /* FIX: Transition only specific properties */
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  
-  /* FIX: Tell the browser to optimize this element */
-  will-change: transform;
-  
-  text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.6);
-  transform: translateY(-50px); 
-}
-
-.cta:hover {
-  opacity: 1;
-  /* Combine the existing translation with the scale */
-  transform: translateY(-50px) scale(1.05);
-  letter-spacing: 4px;
-}
-
-/* Copyright (Left) */
-.copyright {
-  position: absolute;
-  left: 60px; 
-  font-size: 12px; 
-  letter-spacing: 2px;
-  font-weight: bold; 
-  color: #ffffff;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-@keyframes drift {
-  0% { background-position: center -40px; }
-  50% { background-position: center -50px; }
-  100% { background-position: center -40px; }
-}
-
-.layer-1-background {
-  animation: drift 10s ease-in-out infinite;
-}
-
-@keyframes breathe {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4)); }
-  50% { transform: scale(1.05); filter: drop-shadow(0px 6px 8px rgba(0, 0, 0, 0.2)); }
-}
-
-.logo-icon img {
-  width: 60px;
-  animation: breathe 4s ease-in-out infinite; /* Gently pulses every 4 seconds */
-}
-
-@keyframes floatUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.center-text {
-  /* ... existing styles ... */
-  animation: floatUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  font-size: clamp(11px, 1.2vw, 14px);
 }
 
 /* =========================================
-   STORYLINE REVEAL ANIMATION
+   TABLET  (max-width: 1024px)
 ========================================= */
-@keyframes storyReveal {
-  0% { 
-      opacity: 0; 
-      letter-spacing: 20px; 
-      filter: blur(10px); 
+@media only screen and (max-width: 1024px) {
+  .layer-3-branding {
+    padding: 24px 30px;
   }
-  100% { 
-      opacity: 1; 
-      letter-spacing: 7px; /* Matches your current spacing */
-      filter: blur(0px); 
+
+  .logo-icon {
+    left: 30px;
+  }
+
+  .bottom-text {
+    padding: 0 30px;
+  }
+
+  .copyright {
+    left: 30px;
+  }
+
+  .email {
+    right: 30px;
   }
 }
 
-.subtitle {
-  margin-top: 15px;
-  font-size: 14px; 
-  letter-spacing: 7px; 
-  font-weight: bold;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-  
-  /* APPLYING THE ANIMATION */
-  animation: storyReveal 3.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@keyframes subtlePulse {
-  0%, 100% { text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.2); }
-  50% { text-shadow: 0px 2px 10px rgba(255, 255, 255, 0.4); }
-}
-
-.subtitle {
-  /* ... existing animation code ... */
-  animation: storyReveal 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-             subtlePulse 6s ease-in-out infinite; /* Adds a breathing/glowing effect */
-}
-
-.subtitle {
-  margin-top: 15px;
-  font-size: 14px; 
-  letter-spacing: 7px; 
-  font-weight: bold;
-  color: #ffffff;
-  
-  /* 1. The Dreamy Glow (Three layers of shadow create a soft halo) */
-  text-shadow: 
-      0 0 10px rgba(255, 255, 255, 0.8), /* Inner tight glow */
-      0 0 20px rgba(255, 255, 255, 0.5), /* Mid spread */
-      0 0 40px rgba(255, 255, 255, 0.3); /* Outer dreamy halo */
-
-  /* 2. The Animation (Crystallizing reveal) */
-  animation: storyReveal 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
 /* =========================================
-   BASE STYLES & LAYOUT
-========================================= */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body, #root { width: 100%; height: 100vh; overflow: hidden; }
-body { font-family: 'CenturyGothic', sans-serif; color: #ffffff; background-color: #000000; }
-
-/* =========================================
-   BOTTOM AREA (Mirroring image_68fd3d.jpg)
-========================================= */
-.bottom-text {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    padding: 0 40px;
-}
-
-/* LEFT: Copyright */
-.copyright {
-    position: absolute;
-    left: 40px; 
-    font-size: 11px; 
-    letter-spacing: 1px;
-    font-weight: normal; 
-    color: #ffffff;
-    opacity: 0.8;
-}
-
-
-
-/* RIGHT: Email Pill Button */
-.email {
-    position: absolute;
-    right: 40px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    background: rgba(0, 0, 0, 0.4); /* Dark semi-transparent pill */
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px; 
-    font-size: 12px;
-    text-decoration: none;
-    color: white;
-    letter-spacing: 2px;
-}
-
-/* =========================================
-   TAGLINE (Increased size & Cut-to-cut highlight)
-========================================= */
-.subtitle {
-  display: inline-block;
-  /* Reduced horizontal padding to 6px for "cut-to-cut" feel */
-  padding: 3px 6px; 
-  margin-top: 20px;
-  line-height: 1; 
-  
-  /* The Fill: A cool, muted, semi-transparent blue-gray tint */
-  background-color: rgba(160, 175, 210, 0.25); 
-  
-  border: none; 
-  
-  /* Slightly increased font size */
-  font-size: 14px; 
-  letter-spacing: 6px; 
-  font-weight: normal;
-  color: #ffffff;
-  
-  /* Reveal animation */
-  animation: storyReveal 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-
-/* =========================================
-   MOBILE RESPONSIVENESS (Screens < 768px)
+   MOBILE  (max-width: 768px)
 ========================================= */
 @media only screen and (max-width: 768px) {
-    /* ... keep your existing mobile fixes ... */
 
-    /* Force the Branding section to stack vertically */
-    .layer-3-branding {
-        position: relative !important; /* Removes the absolute floating */
-        top: 0 !important;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 40px;
-        margin-bottom: 20px;
-    }
+  /* Allow the page to scroll naturally on small screens */
+  html, body, #root {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+  }
 
-    /* Reset the Logo Icon so it sits naturally */
-    .logo-icon {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        margin-bottom: 15px; /* Adds space between logo and name */
-    }
+  .layer-1-background {
+    height: 100svh;         /* use small-viewport height on mobile */
+    min-height: 100svh;
+    overflow: hidden;
+  }
 
-    /* Adjust the text name size for mobile */
-    .studio-name {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
+  /* ---- BRANDING ---- */
+  .layer-3-branding {
+    position: absolute;
+    flex-direction: row;    /* keep logo + name side-by-side */
+    justify-content: center;
+    padding: 20px 20px;
+    top: 0;
+    gap: 10px;
+  }
 
-    /* Ensure the logo image is controlled */
-    .logo-icon img {
-        width: 50px !important; /* Slightly smaller for mobile */
-    }
+  .logo-icon {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+
+  .logo-icon img {
+    width: 36px !important;
+  }
+
+  .studio-name {
+    font-size: 20px;
+    letter-spacing: 1.5px;
+  }
+
+  /* ---- CENTER TEXT ---- */
+  .layer-2-text {
+    height: 100svh;
+    justify-content: center;
+  }
+
+  .center-text {
+    margin-top: 50px;  /* push below header */
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .title-group {
+    max-width: 95vw;
+  }
+
+  .title {
+    font-size: clamp(2.8rem, 16vw, 4.5rem);
+    white-space: nowrap;
+  }
+
+  .date-row {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    font-size: 10px;
+    letter-spacing: 4px;
+    white-space: normal;
+    text-align: center;
+    padding: 4px 10px;
+  }
+
+  /* ---- BOTTOM AREA ---- */
+  .bottom-text {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    bottom: clamp(16px, 4vh, 30px);
+    padding: 0 16px;
+  }
+
+  /* CTA — no transform offset on mobile */
+  .cta {
+    position: relative;
+    font-size: 10px;
+    letter-spacing: 3px;
+    order: 1;
+  }
+
+  .cta:hover {
+    transform: scale(1.03);
+    letter-spacing: 4px;
+  }
+
+  /* Email pill */
+  .email {
+    position: relative;
+    right: auto;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 7px 16px;
+    order: 2;
+  }
+
+  /* Copyright */
+  .copyright {
+    position: relative;
+    left: auto;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    opacity: 0.7;
+    order: 3;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE  (max-width: 480px)
+========================================= */
+@media only screen and (max-width: 480px) {
+
+  .studio-name {
+    font-size: 17px;
+  }
+
+  .logo-icon img {
+    width: 30px !important;
+  }
+
+  .title {
+    font-size: clamp(2.4rem, 18vw, 3.5rem);
+  }
+
+  .subtitle {
+    font-size: 9px;
+    letter-spacing: 3px;
+  }
+
+  .email {
+    font-size: 9px;
+    padding: 6px 13px;
+  }
+
+  .cta {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+  }
+
+  .copyright {
+    font-size: 8px;
+  }
+}
+
+/* =========================================
+   LANDSCAPE MOBILE  (short + wide)
+========================================= */
+@media only screen and (max-width: 896px) and (orientation: landscape) {
+
+  .layer-1-background {
+    height: 100svh;
+    min-height: 100svh;
+  }
+
+  .layer-3-branding {
+    padding: 12px 20px;
+  }
+
+  .logo-icon img {
+    width: 28px !important;
+  }
+
+  .studio-name {
+    font-size: 16px;
+  }
+
+  .center-text {
+    margin-top: 30px;
+    gap: 10px;
+  }
+
+  .title {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+
+  .date-row {
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-top: 4px;
+  }
+
+  .bottom-text {
+    bottom: 12px;
+    gap: 10px;
+  }
+
+  .cta {
+    font-size: 9px;
+  }
+
+  .email {
+    font-size: 9px;
+    padding: 5px 12px;
+  }
+
+  .copyright {
+    font-size: 8px;
+  }
+}
+
+/* =========================================
+   LARGE SCREENS  (min-width: 1440px)
+========================================= */
+@media only screen and (min-width: 1440px) {
+
+  .title {
+    font-size: 7.5rem;
+  }
+
+  .studio-name {
+    font-size: 38px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    letter-spacing: 7px;
+  }
+
+  .cta {
+    font-size: 13px;
+  }
+
+  .email {
+    font-size: 13px;
+  }
+
+  .copyright {
+    font-size: 13px;
+  }
 }
