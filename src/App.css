@@ -422,8 +422,9 @@ body {
     justify-content: center;
   }
 
+ /* ---- CENTER TEXT ---- */
   .center-text {
-    margin-top: 50px;
+    margin-top: 15px; /* Reduced from 50px to pull it up by ~3-4 arrows */
     gap: 16px;
     padding: 0 16px;
   }
