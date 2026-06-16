@@ -76,23 +76,25 @@ body {
 
 /* =========================================
    LAYER 1 — BACKGROUND IMAGE
+   Uses percentage-based drift + oversized
+   background to prevent black edge bleed
 ========================================= */
 @keyframes drift {
-  0%   { background-position: center top;   }
-  50%  { background-position: center 20px;  }
-  100% { background-position: center top;   }
+  0%   { background-position: center 0%; }
+  50%  { background-position: center 3%; }
+  100% { background-position: center 0%; }
 }
 
-/* DEFAULT: Desktop */
 .layer-1-background {
   position: relative;
   width: 100%;
   min-height: 100vh;
   height: 100vh;
   background-image: var(--bg-desktop);
-  background-size: cover;
-  background-position: center top;
+  background-size: 110%;
+  background-position: center 0%;
   background-repeat: no-repeat;
+  background-color: #000000;
   animation: drift 10s ease-in-out infinite;
   overflow: hidden;
 }
@@ -342,10 +344,10 @@ body {
 ========================================= */
 @media only screen and (max-width: 1024px) {
 
-  /* Swap to tablet background */
   .layer-1-background {
     background-image: var(--bg-tablet);
-    background-position: center top;
+    background-size: 115%;
+    background-position: center 0%;
   }
 
   .layer-3-branding {
@@ -374,15 +376,14 @@ body {
 ========================================= */
 @media only screen and (max-width: 768px) {
 
-  /* Swap to mobile background */
   .layer-1-background {
     background-image: var(--bg-mobile);
-    background-position: center top;
+    background-size: 130%;
+    background-position: center 0%;
     height: 100svh;
     min-height: 100svh;
   }
 
-  /* Allow scroll on small screens */
   html, body, #root {
     overflow-y: auto;
     height: auto;
@@ -494,6 +495,10 @@ body {
 ========================================= */
 @media only screen and (max-width: 480px) {
 
+  .layer-1-background {
+    background-size: 140%;
+  }
+
   .studio-name {
     font-size: 17px;
   }
@@ -533,7 +538,8 @@ body {
 
   .layer-1-background {
     background-image: var(--bg-mobile);
-    background-position: center center;
+    background-size: 120%;
+    background-position: center 0%;
     height: 100svh;
     min-height: 100svh;
   }
@@ -605,6 +611,10 @@ body {
    LARGE SCREENS  (min-width: 1440px)
 ========================================= */
 @media only screen and (min-width: 1440px) {
+
+  .layer-1-background {
+    background-size: 105%;
+  }
 
   .title {
     font-size: 7.5rem;
