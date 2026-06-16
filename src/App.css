@@ -391,12 +391,13 @@ body {
   }
 
   /* ---- BRANDING ---- */
+ /* ---- BRANDING ---- */
   .layer-3-branding {
     position: absolute;
     flex-direction: row;
     justify-content: center;
     padding: 20px 20px;
-    top: 0;
+    top: 25px; /* Nudged down by ~25 pixels */
     gap: 10px;
   }
 
