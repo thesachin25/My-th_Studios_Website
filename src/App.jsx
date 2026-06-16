@@ -1,13 +1,19 @@
 import React from 'react';
 import './App.css';
-import bgImage from "./assets/Background.jpg";
-import logoIcon from "./assets/Logo.png";
+import bgDesktop from "./assets/Background.jpg";
+import bgTablet  from "./assets/Background Mob.png";
+import bgMobile  from "./assets/Background Mob.png";
+import logoIcon  from "./assets/Logo.png";
 
 function App() {
   return (
     <div
       className="layer-1-background"
-      style={{ backgroundImage: `url(${bgImage})` }}
+      style={{
+        '--bg-desktop': `url(${bgDesktop})`,
+        '--bg-tablet':  `url(${bgTablet})`,
+        '--bg-mobile':  `url(${bgMobile})`
+      }}
     >
 
       {/* ── LAYER 3: Logo & Studio Name ── */}
